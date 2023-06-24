@@ -18,7 +18,7 @@ public class NumberIndexService {
     IEntityRepository entityRepository;
     private int numMayor = 0;
 
-    public void executeInsert() {
+    public boolean executeInsert() {
         try {
             logger.info("**** executeInsert ****");
             logger.info("Eliminando registros y empezar de 0");
@@ -31,9 +31,11 @@ public class NumberIndexService {
                 entityRepository.save(entityNumber);
             }
             logger.info("**** Finaliza insert ****");
+            return true;
         } catch (Exception e) {
             logger.error("Exception in executeInsert(): ", e);
         }
+        return false;
     }
 
     @Async
@@ -57,7 +59,7 @@ public class NumberIndexService {
     @Async
     public void executeLast() {
         try {
-            logger.info("Consultando ultimos 500 (executeLast)");
+            logger.info("* Consultando ultimos 500 (executeLast)");
             List<EntityNumber> last = entityRepository.getTheHighestNumberLastAll();
             int mayor = 0;
             for (EntityNumber number : last) {

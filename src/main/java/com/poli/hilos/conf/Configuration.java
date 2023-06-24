@@ -17,9 +17,10 @@ public class Configuration {
     @Scheduled (fixedRate = 60000)
     public void execute() {
         logger.info("Execute...");
-        numberIndexService.executeInsert();
-        numberIndexService.executeFirst();
-        numberIndexService.executeLast();
+        if (numberIndexService.executeInsert()) {
+            numberIndexService.executeFirst();
+            numberIndexService.executeLast();
+        }
         logger.info("End ...");
     }
 }
